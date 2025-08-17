@@ -8,7 +8,7 @@
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Display quotes -->
+  <!-- Quote Display -->
   <div id="quoteDisplay"></div>
 
   <!-- Button to show a new quote -->
@@ -20,10 +20,10 @@
   <input type="text" id="newQuoteCategory" placeholder="Quote category">
   <button id="addQuoteBtn">Add Quote</button>
 
-  <!-- JSON Import/Export -->
-  <h2>Import/Export Quotes</h2>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)">
-  <button id="exportBtn">Export Quotes as JSON</button>
+  <!-- Export/Import -->
+  <h2>Export / Import Quotes</h2>
+  <button id="exportBtn">Export Quotes to JSON</button>
+  <input type="file" id="importFile" accept=".json">
 
   <!-- Link JS -->
   <script src="script.js"></script>
