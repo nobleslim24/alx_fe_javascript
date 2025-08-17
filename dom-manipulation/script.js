@@ -6,32 +6,31 @@ let quotes = [
   { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", category: "Inspiration" }
 ];
 
-// Function to display a random quote
-function displayRandomQuote() {
-  let randomIndex = Math.floor(Math.random() * quotes.length);
-  let randomQuote = quotes[randomIndex];
-  document.getElementById("quoteDisplay").innerText =
-    `"${randomQuote.text}" — ${randomQuote.category}`;
+// Function to show a random quote
+function showRandomQuote() {
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  const quote = quotes[randomIndex];
+  document.getElementById("quoteDisplay").innerText = `"${quote.text}" — ${quote.category}`;
 }
 
 // Function to add a new quote
 function addQuote() {
-  let text = document.getElementById("newQuoteText").value.trim();
-  let category = document.getElementById("newQuoteCategory").value.trim();
+  const text = document.getElementById("newQuoteText").value.trim();
+  const category = document.getElementById("newQuoteCategory").value.trim();
 
   if (text && category) {
-    quotes.push({ text: text, category: category });
+    quotes.push({ text, category });
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
-    displayRandomQuote(); // show the newly added quote
+    showRandomQuote(); // update display
   } else {
     alert("Please enter both a quote and a category.");
   }
 }
 
 // Event listeners
-document.getElementById("newQuote").addEventListener("click", displayRandomQuote);
+document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
 
-// Show a random quote when page loads
-displayRandomQuote();
+// Show a quote on page load
+showRandomQuote();
