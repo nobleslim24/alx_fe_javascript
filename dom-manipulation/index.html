@@ -7,13 +7,23 @@
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
+
+  <!-- Category Filter -->
+  <label for="categoryFilter">Filter by Category:</label>
+  <select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+    <!-- Categories populated dynamically -->
+  </select>
+
+  <!-- Quote Display -->
   <div id="quoteDisplay">
     <p id="quote-text"></p>
     <p id="quote-category"></p>
   </div>
-  <button id="newQuote" onclick="showRandomQuote()">Show New Quote</button>
- 
-  <div class="quoteFormContainer"></div>
+  <button id="newQuote" onclick="filterQuotes()">Show New Quote</button>
+
+  <!-- Add Quote Form -->
+  <div class="dynamicFormContainer"></div>
 
   <script src="script.js"></script>
 </body>
