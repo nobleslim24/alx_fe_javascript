@@ -4,31 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic Quote Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #quoteDisplay {
+      margin: 15px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    #syncStatus {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .loading {
+      color: blue;
+      background: #e6f0ff;
+    }
+    .success {
+      color: green;
+      background: #e6ffe6;
+    }
+    .error {
+      color: red;
+      background: #ffe6e6;
+    }
+  </style>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- ✅ Quote display section -->
+  <!-- Quote Display -->
   <div id="quoteDisplay">
-    <p id="quote-text">Click the button to see a quote</p>
+    <p id="quote-text"></p>
     <p id="quote-category"></p>
   </div>
 
-  <!-- ✅ Show random quote -->
-  <button onclick="showRandomQuote()">Show Random Quote</button>
+  <button id="newQuote" onclick="showRandomQuote()">Show New Quote</button>
 
-  <!-- ✅ Category filter dropdown -->
-  <label for="categoryFilter">Filter by Category:</label>
-  <select id="categoryFilter" onchange="filterQuotes()">
-    <option value="all">All Categories</option>
-  </select>
+  <!-- Category Filter -->
+  <div>
+    <h2>Filter by Category</h2>
+    <select id="categoryFilter" onchange="filterQuotes()">
+      <option value="all">All Categories</option>
+    </select>
+  </div>
 
-  <!-- ✅ Add quote form container -->
+  <!-- Add Quote Form -->
   <div class="quoteFormContainer"></div>
 
-  <!-- ✅ Export & Import JSON -->
-  <button onclick="exportToJsonFile()">Export Quotes (JSON)</button>
-  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  <!-- JSON Import / Export controls -->
+  <div>
+    <h2>Import / Export Quotes</h2>
+    <button onclick="exportToJsonFile()">Export Quotes</button>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  </div>
+
+  <!-- Sync Section -->
+  <div>
+    <h2>Server Sync</h2>
+    <button onclick="syncWithServer()">Sync with Server</button>
+    <p id="syncStatus"></p>
+  </div>
 
   <script src="script.js"></script>
 </body>
