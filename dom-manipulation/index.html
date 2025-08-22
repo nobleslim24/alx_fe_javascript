@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Quote Generator with Filtering</title>
+  <title>Dynamic Quote Generator</title>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Filter Dropdown -->
+  <!-- ✅ Quote display section -->
+  <div id="quoteDisplay">
+    <p id="quote-text">Click the button to see a quote</p>
+    <p id="quote-category"></p>
+  </div>
+
+  <!-- ✅ Show random quote -->
+  <button onclick="showRandomQuote()">Show Random Quote</button>
+
+  <!-- ✅ Category filter dropdown -->
   <label for="categoryFilter">Filter by Category:</label>
   <select id="categoryFilter" onchange="filterQuotes()">
     <option value="all">All Categories</option>
   </select>
 
-  <div id="quoteDisplay">
-    <p id="quote-text"></p>
-    <p id="quote-category"></p>
-  </div>
-
-  <button id="newQuote" onclick="showRandomQuote()">Show New Quote</button>
-
+  <!-- ✅ Add quote form container -->
   <div class="quoteFormContainer"></div>
 
-  <!-- JSON Import / Export controls -->
-  <div>
-    <h2>Import / Export Quotes</h2>
-    <button onclick="exportToJsonFile()">Export Quotes</button>
-    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
-  </div>
+  <!-- ✅ Export & Import JSON -->
+  <button onclick="exportToJsonFile()">Export Quotes (JSON)</button>
+  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
   <script src="script.js"></script>
 </body>
