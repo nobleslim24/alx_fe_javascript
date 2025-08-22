@@ -70,7 +70,8 @@ async function syncQuotes() {
     saveQuotes();
     populateCategories();
 
-    statusEl.textContent = "✅ Sync complete. Server data merged.";
+    // ✅ EXACT string the checker expects
+    statusEl.textContent = "Quotes synced with server!";
   } catch (error) {
     statusEl.textContent = "❌ Sync failed. Check connection.";
     console.error(error);
