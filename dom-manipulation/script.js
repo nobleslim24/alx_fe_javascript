@@ -1,6 +1,6 @@
-// ✅ Load quotes from localStorage if available, else use default
+// ✅ Load quotes from localStorage if available, else use defaults
 let quotes = JSON.parse(localStorage.getItem("quotes")) || [
-  { text: "The day ended doesn't mean it's the the end", category: "Motivation" },
+  { text: "The day ended doesn't mean it's the end", category: "Motivation" },
   { text: "To be or not to be.", category: "Philosophy" },
   { text: "Think different, Work smart", category: "Inspiration" }
 ];
@@ -10,10 +10,23 @@ function saveQuotes() {
   localStorage.setItem("quotes", JSON.stringify(quotes));
 }
 
-// Show random quote
+// Show random quote (applies category filter if active)
 function showRandomQuote() {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const randomQuote = quotes[randomIndex];
+  const selectedCategory = localStorage.getItem("selectedCategory") || "all";
+
+  let filteredQuotes =
+    selectedCategory === "all"
+      ? quotes
+      : quotes.filter((q) => q.category === selectedCategory);
+
+  if (filteredQuotes.length === 0) {
+    document.getElementById("quote-text").innerHTML = "No quotes found for this category.";
+    document.getElementById("quote-category").innerHTML = "";
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+  const randomQuote = filteredQuotes[randomIndex];
 
   document.getElementById("quote-text").innerHTML = randomQuote.text;
   document.getElementById("quote-category").innerHTML = randomQuote.category;
@@ -29,7 +42,39 @@ function loadLastViewedQuote() {
     const quote = JSON.parse(lastQuote);
     document.getElementById("quote-text").innerHTML = quote.text;
     document.getElementById("quote-category").innerHTML = quote.category;
+  } else {
+    showRandomQuote(); // Show one by default
   }
+}
+
+// ✅ Populate category dropdown dynamically
+function populateCategories() {
+  const categoryFilter = document.getElementById("categoryFilter");
+
+  // Clear existing options except "All"
+  categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+
+  const categories = [...new Set(quotes.map((q) => q.category))];
+
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
+
+  // ✅ Restore last selected category from localStorage
+  const savedCategory = localStorage.getItem("selectedCategory");
+  if (savedCategory) {
+    categoryFilter.value = savedCategory;
+  }
+}
+
+// ✅ Filter quotes based on selected category
+function filterQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("selectedCategory", selectedCategory);
+  showRandomQuote();
 }
 
 // Form to add quotes
@@ -53,7 +98,7 @@ function createAddQuoteForm() {
   quoteFormContainer.appendChild(addNewQuoteCategoryInput);
 
   const addQuoteButton = document.createElement("button");
-  addQuoteButton.id = "QuoteButton"; // ✅ fixed Id -> id
+  addQuoteButton.id = "QuoteButton";
   addQuoteButton.textContent = "Add Quote";
   quoteFormContainer.appendChild(addQuoteButton);
 
@@ -64,6 +109,7 @@ function createAddQuoteForm() {
     if (textValue && categoryValue) {
       quotes.push({ text: textValue, category: categoryValue });
       saveQuotes(); // ✅ save new quote
+      populateCategories(); // ✅ update categories dynamically
       alert("Quote added successfully!");
       addNewQuoteTextInput.value = "";
       addNewQuoteCategoryInput.value = "";
@@ -91,6 +137,7 @@ function importFromJsonFile(event) {
     const importedQuotes = JSON.parse(event.target.result);
     quotes.push(...importedQuotes);
     saveQuotes();
+    populateCategories(); // ✅ refresh categories
     alert("Quotes imported successfully!");
   };
   fileReader.readAsText(event.target.files[0]);
@@ -98,4 +145,5 @@ function importFromJsonFile(event) {
 
 // Initialize app
 createAddQuoteForm();
-loadLastViewedQuote(); // ✅ show last viewed on reload
+populateCategories();
+loadLastViewedQuote();
